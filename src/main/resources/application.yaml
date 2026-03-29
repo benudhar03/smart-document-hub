@@ -1,0 +1,54 @@
+server:
+  port: 5789
+
+spring:
+  application:
+    name: smart-document-hub
+
+  datasource:
+    url: ${RDS_URL:jdbc:postgresql://localhost:5432/smartdoc}
+    username: ${RDS_USERNAME:admin}
+    password: ${RDS_PASSWORD:password}
+    hikari:
+      maximum-pool-size: 10
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+
+aws:
+  region: ${AWS_REGION:us-east-1}
+  s3:
+    bucket: ${S3_BUCKET:smart-document-hub}
+  sqs:
+    queue-url: ${SQS_QUEUE_URL:https://sqs.us-east-1.amazonaws.com/123456789012/document-processing}
+  sns:
+    topic-arn: ${SNS_TOPIC_ARN:arn:aws:sns:us-east-1:123456789012:document-notifications}
+  dynamodb:
+    table-name: ${DYNAMODB_TABLE:document-metadata}
+  cognito:
+    user-pool-id: ${COGNITO_USER_POOL_ID:us-east-1_xxxxxxxxx}
+    client-id: ${COGNITO_CLIENT_ID:xxxxxxxxxxxxxxxxxxxxxxxxxx}
+  opensearch:
+    endpoint: ${OPENSEARCH_ENDPOINT:https://search-smartdoc.region.es.amazonaws.com}
+  secretsmanager:
+    secret-id: ${SECRET_ID:smartdoc/credentials}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  metrics:
+    export:
+      cloudwatch:
+        enabled: true
+        namespace: SmartDocumentHub
