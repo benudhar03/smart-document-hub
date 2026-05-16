@@ -1,2 +1,47 @@
+# Maven Wrapper
 /mvnw text eol=lf
+mvnw.cmd text eol=crlf
+
+# Shell Scripts
+*.sh text eol=lf
+
+# Batch Scripts
 *.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Java Source Files
+*.java text diff=java eol=lf
+
+# YAML Files
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Properties Files
+*.properties text eol=lf
+
+# XML Files
+*.xml text eol=lf
+
+# JSON Files
+*.json text eol=lf
+
+# Markdown
+*.md text eol=lf
+
+# Docker
+Dockerfile text eol=lf
+*.dockerfile text eol=lf
+
+# Gradle / Maven
+*.gradle text eol=lf
+pom.xml text eol=lf
+
+# Ignore binary files from line ending normalization
+*.jar binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+*.gz binary
