@@ -8,6 +8,7 @@ import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
+import software.amazon.awssdk.services.sqs.SqsClientBuilder;
 import software.amazon.awssdk.services.sqs.model.QueueAttributeName;
 import software.amazon.awssdk.services.sqs.model.GetQueueAttributesRequest;
 import software.amazon.awssdk.services.sqs.model.GetQueueAttributesResponse;
@@ -26,13 +27,17 @@ public class SQSConfig {
     @Value("${aws.sqs.endpoint:}")
     private String endpoint;
 
-    @Bean
+    @Bean(name = "customSqsClient")
     public SqsClient sqsClient() {
-        return SqsClient.builder()
+
+        SqsClientBuilder builder = SqsClient.builder()
                 .region(Region.of(region))
-                .credentialsProvider(DefaultCredentialsProvider.create())
-                .endpointOverride(endpoint != null && !endpoint.isEmpty() ? URI.create(endpoint) : null)
-                .build();
+                .credentialsProvider(DefaultCredentialsProvider.create());
+
+        if (endpoint != null && !endpoint.isEmpty()) {
+            builder.endpointOverride(URI.create(endpoint));
+        }
+        return builder.build();
     }
 
     @Bean
